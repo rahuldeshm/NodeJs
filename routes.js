@@ -15,7 +15,8 @@ function requestHandler(req, res) {
         return res.end();
       }
     );
-  } // if (req.url === "/node") {
+  }
+  // if (req.url === "/node") {
   //   res.write("<body><h1>Welcome to my node.js project</body></h1>");
   // } else if (req.url === "/about") {
   //   res.write("<body><h1>Welcome to about page .</body></h1>");}
@@ -25,9 +26,10 @@ function requestHandler(req, res) {
       console.log(e);
       body.push(e);
     });
+
     req.on("end", () => {
       const parsedBody = Buffer.concat(body).toString();
-      const message = parsedBody.split("=")[1];
+      const message = parsedBody.split("=")[0];
       fs.writeFile("hello.text", message, (err) => {
         res.statusCode = 302;
         res.setHeader("Location", "/");
