@@ -1,14 +1,17 @@
-//Creating a Node Server.
-const routes = require("./routes");
 const http = require("http");
+const express = require("express");
 
-console.log(routes.someText);
-const server = http.createServer((req, res) => {
-  // const server = http.createServer(routes) can do like this to
-  routes.handler(req, res);
-  console.log("Rahul");
-  //process.exit(); to exit the registered event listener.
-  //hard exit our loop so our project shut down.
+const app = express();
+app.use((req, res, next) => {
+  console.log("in the middleware");
+  next(); //allows the request to cantinue to next middleware in the line
+}); //middleware will run for each incoming request
+//next -> is function will be passed by experss to use method
+app.use((req, res, next) => {
+  console.log("in another middleware");
+  res.send({ key: "somevalue" });
+  // send allows to send response and this allows to attach body which of any type and this body will automatically detects the content type and send to the response.
 });
+const server = http.createServer(app);
 
 server.listen(3000);
