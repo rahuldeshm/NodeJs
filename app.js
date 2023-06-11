@@ -4,16 +4,15 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
+const contactController = require("./controllers/contactus");
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public"))); //used for making css file publically available
 app.use("/admin", adminRoutes);
 app.use("/shop", shopRoutes);
-app.use("/contactus", (req, res, next) => {
-  res.sendFile(path.join(__dirname, "views", "contactus.html"));
-});
+app.use("/contactus", contactController.getContactus);
 app.use("/success", (req, res, next) => {
   res.sendFile(path.join(__dirname, "views", "success.html"));
 });
